@@ -1,15 +1,22 @@
-
-  
-import React from 'react';
-
+import React, { Fragment } from 'react';
+import ReactDOM from 'react-dom';
 import Card from './Card';
 import Button from './Button';
 import classes from './ErrorModal.module.css';
 
+const Backdrop = (props)=>{
+    return  <div className={classes.backdrop} onClick={props.cancelModel}/>;
+}
+
+
+
 const ErrorModal = (props) => {
   return (
-    <div>
-      <div className={classes.backdrop} />
+    <Fragment>
+     {ReactDOM.createPortal(
+       <Backdrop onClick={props.cancelModel}/>,
+       document.getElementById('warning-header')
+      )}
       <Card className={classes.modal}>
         <header className={classes.header}>
           <h2>{props.title}</h2>
@@ -21,7 +28,9 @@ const ErrorModal = (props) => {
           <Button onClick={props.cancelModel}>Okay</Button>
         </footer>
       </Card>
-    </div>
+
+
+    </Fragment>
   );
 };
 
